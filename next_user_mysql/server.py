@@ -1,34 +1,60 @@
-from crypt import methods
-from flask import Flask, render_template, redirect, request
-# import the class from friend.py
+from flask import Flask, render_template, request, redirect
+
 from user import User
 
+app=Flask(__name__)
 
-app = Flask(__name__)
-@app.route("/")
+@app.route('/')
 def index():
-    # call the get all classmethod to get all friends
-    return render_template("new.html")
-            
-@app.route("/users", methods=["POST"])
+    return redirect('/users')
+
+
+@app.route('/users')
 def users():
-    data = {
-        "first_name": request.form["first_name"],
-        "last_name" : request.form["last_name"],
-        "email" : request.form["email"],
-        # "created_at" : request.form["created_at"]
+    return render_template("users.html",users=User.get_all())
+
+
+@app.route('/user/new')
+def new():
+    return render_template("new.html")
+
+@app.route('/user/create',methods=['POST'])
+def create():
+    print(request.form)
+    User.save(request.form)
+    return redirect('/users')
+
+
+@app.route('/user/edit/<int:id>')
+def edit(id):
+    data ={ 
+        "id":id
     }
-    # We pass the data dictionary into the save method from the Friend class.
-    User.save(data)
-    return redirect("/user")
+    return render_template("show_user.html",user=User.get_user(data))
 
-@app.route('/user', methods=["GET"])
-def user():
-    users = User.get_all()
-    return render_template('users.html', users = users)
-if __name__ == "__main__":
+@app.route('/user/show/<int:id>')
+def show(id):
+    data ={ 
+        "id":id
+    }
+    return render_template("display_user.html",user=User.get_user(data))
+
+
+@app.route('/user/update',methods=['POST'])
+def update():
+    User.update(request.form)
+    return redirect('/users')
+
+@app.route('/user/destroy/<int:id>')
+def destroy(id):
+    data ={
+        'id': id
+    }
+    User.destroy(data)
+    return redirect('/users')
+
+if __name__=="__main__":
     app.run(debug=True)
-
 
 
 
