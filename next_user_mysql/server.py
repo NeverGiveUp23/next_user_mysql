@@ -8,14 +8,13 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     # call the get all classmethod to get all friends
-    users = User.get_all()
-    return render_template("new.html", users = users)
+    return render_template("new.html")
             
 @app.route("/users", methods=["POST"])
 def users():
     data = {
-        "fname": request.form["fname"],
-        "lname" : request.form["lname"],
+        "first_name": request.form["first_name"],
+        "last_name" : request.form["last_name"],
         "email" : request.form["email"],
         # "created_at" : request.form["created_at"]
     }
@@ -25,6 +24,11 @@ def users():
 
 @app.route('/user', methods=["GET"])
 def user():
-    return render_template('users.html')
+    users = User.get_all()
+    return render_template('users.html', users = users)
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
