@@ -1,21 +1,11 @@
-.wrap{
-  background-color: #2192FF;
-  margin: 0 auto;
-  width: 50%;
-  height: 400px;
-  display: block;
-  height:300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+#button{
+  margin-top: 20px;
 }
 
-
-.space{
-  margin-top: 25px;
+#userBtn{
+  margin: 20px;
 }
 
-input{
- border-radius: 10px;
+#table{
+  border-color:olivedrab;
 }
