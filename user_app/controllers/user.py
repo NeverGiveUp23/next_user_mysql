@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect
-
+from user_app.models.user import User
+from flask import render_template,redirect,request
 from user import User
 
-app=Flask(__name__)
+
 
 @app.route('/')
 def index():
@@ -52,9 +52,3 @@ def destroy(id):
     }
     User.destroy(data)
     return redirect('/users')
-
-if __name__=="__main__":
-    app.run(debug=True)
-
-
-
